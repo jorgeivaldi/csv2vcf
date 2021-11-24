@@ -1,3 +1,3 @@
 from lib import csv2vcf
 
-csv2vcf("FRANK_CONTACTOS.csv","output/contactos.vcf")
+csv2vcf("CONTACTOS.csv","output/contactos.vcf")
