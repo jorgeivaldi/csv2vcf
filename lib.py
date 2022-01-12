@@ -38,8 +38,9 @@ def getdata_fromcsv(csv_file, transform_to_object=False):
     rows = get_rows_object(header,csvreader)
   return [header,rows]
 
-def get_vcf_data(nombre, celular, direccion):
-  vcf = """
+def get_vcf_data(nombre, celular, direccion = ""):
+  if direccion != "":
+    vcf = """
 BEGIN:VCARD
 VERSION:2.1
 FN:{0}
@@ -47,6 +48,15 @@ TEL;CELL;VOICE:{1}
 ADR;HOME,PREF:;;{2}
 END:VCARD
 """.format(nombre,celular,direccion)
+  else:
+    vcf = """
+BEGIN:VCARD
+VERSION:2.1
+FN:{0}
+TEL;CELL;VOICE:{1}
+END:VCARD
+""".format(nombre,celular)
+
   vcf = vcf.lstrip()
   return vcf
 
@@ -56,7 +66,11 @@ def get_vcf_file(csv_file):
   output = ""
   for row in rows:
     # print(row)
-    vcf = get_vcf_data(row[0],row[1],row[2])
+    # print(row, len(row))
+    if len(row) == 3:
+        vcf = get_vcf_data(row[0],row[1],row[2])
+    if len(row) == 2:
+        vcf = get_vcf_data(row[0],row[1])
     # print(vcf)
     output += vcf
   # print(rows)
