@@ -3,10 +3,11 @@
 Convierte archivo CSV a Tarjeta VCF (varias en una)
 
 ## How to use
-En main.py debes reemplazar **CONTACTOS.csv** por tu archivo csv, y debes respetar el orden de las columnas:
-*Nombre y Apellido, Celular, Dirección*
+En main.py debes reemplazar **CONTACTOS.csv** por tu archivo csv, y debes respetar el **orden y nombres** de las columnas:
+
+[**nombre**, **celular**, **direccion**]
 o
-*Nombre y Apellido, Celular*
+[**nombre**, **celular**]
 
 ```bash
 virtualenv venv

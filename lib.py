@@ -1,86 +1,26 @@
-import csv,os
+import os
+from libs.csv import getdata_fromcsv
+from libs.file import write_file
+from libs.vcf import get_vcf_data
 
-def get_header(csvreader):
-  header = next(csvreader)
-  header = header[0].split(";")
-  # print(header) #debug
-  return header
+def debug_data(header,row,vcf):
+  print(header)
+  print(row)
+  print(vcf)
 
-def get_rows(csvreader):
-  rows = []
-  for lines in csvreader:
-    row = lines[0].split(";")
-    rows.append(row)
-  return rows
-
-def get_rows_object(header,csvreader):
-  rows = []
+def get_vcf_file(csv_file, separator_csv=";", debug_enabled=False):
+  [header, rows] = getdata_fromcsv(csv_file,separator_csv=separator_csv)
   # print(header)
-  for lines in csvreader:
-    row = lines[0].split(";")
-    # print(row)
-    data = {}
-    i = 0
-    for col in header:
-      data[col] = row[i]
-      i += 1
-      # print(data)
-    rows.append(data)
-  return rows
-
-def getdata_fromcsv(csv_file, transform_to_object=False):
-  file = open(csv_file)
-  csvreader = csv.reader(file)
-  header = get_header(csvreader)
-
-  rows = get_rows(csvreader)
-  if(transform_to_object):
-    rows = get_rows_object(header,csvreader)
-  return [header,rows]
-
-def get_vcf_data(nombre, celular, direccion = ""):
-  if direccion != "":
-    vcf = """
-BEGIN:VCARD
-VERSION:2.1
-FN:{0}
-TEL;CELL;VOICE:{1}
-ADR;HOME,PREF:;;{2}
-END:VCARD
-""".format(nombre,celular,direccion)
-  else:
-    vcf = """
-BEGIN:VCARD
-VERSION:2.1
-FN:{0}
-TEL;CELL;VOICE:{1}
-END:VCARD
-""".format(nombre,celular)
-
-  vcf = vcf.lstrip()
-  return vcf
-
-def get_vcf_file(csv_file):
-  [header, rows] = getdata_fromcsv(csv_file)
-  #print(header)
   output = ""
   for row in rows:
     # print(row)
-    # print(row, len(row))
-    if len(row) == 3:
-        vcf = get_vcf_data(row[0],row[1],row[2])
-    if len(row) == 2:
-        vcf = get_vcf_data(row[0],row[1])
-    # print(vcf)
-    output += vcf
+    contact_vcf = get_vcf_data(header,row)
+    if debug_enabled: debug_data(header,row,contact_vcf)
+    output += contact_vcf
   # print(rows)
   return output
 
-def write_file(file,data):
-  with open(os.path.join(os. path. dirname(__file__), file),"w") as f:
-    f.write(data)
-
-def csv2vcf(csv_file, vcf_file):
-  data = get_vcf_file(csv_file)
-  # print(file)
-  write_file(vcf_file,data)
+def csv2vcf(csv_file, vcf_file, separator_csv=";",debug_enabled=False, want_write_file=True):
+  file_data = get_vcf_file(csv_file, separator_csv, debug_enabled)
+  path = os.path.join(os. path. dirname(__file__), vcf_file)
+  if want_write_file: write_file(path,file_data)
