@@ -4,8 +4,8 @@ from libs.file import write_file
 from libs.vcf import get_vcf_data
 
 def debug_data(header,row,vcf):
-  print(header)
-  print(row)
+  print("header: ",header)
+  print("data:   ",row)
   print(vcf)
 
 def get_vcf_file(csv_file, separator_csv=";", debug_enabled=False):
