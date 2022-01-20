@@ -1,0 +1,4 @@
+altgraph==0.17.2
+pyinstaller==4.8
+pyinstaller-hooks-contrib==2021.5
+PySimpleGUI==4.56.0
