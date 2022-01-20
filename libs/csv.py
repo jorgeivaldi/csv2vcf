@@ -33,6 +33,10 @@ def get_rows_object(header,csvreader, separator_csv=";"):
   return rows
 # Basic CSV Library -- END
 
+def getheader_fromcsv(csv_file, separator_csv=";"):
+  file = open(csv_file)
+  csvreader = csv.reader(file)
+  return get_header(csvreader)
 
 def getdata_fromcsv(csv_file, transform_to_object=False, separator_csv=";"):
   file = open(csv_file)

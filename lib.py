@@ -20,7 +20,6 @@ def get_vcf_file(csv_file, separator_csv=";", debug_enabled=False):
   # print(rows)
   return output
 
-def csv2vcf(csv_file, vcf_file, separator_csv=";",debug_enabled=False, want_write_file=True):
-  file_data = get_vcf_file(csv_file, separator_csv, debug_enabled)
-  path = os.path.join(os. path. dirname(__file__), vcf_file)
-  if want_write_file: write_file(path,file_data)
+def csv2vcf(csv_file, output_vcf, separator_csv=";",debug_enabled=False, want_write_file=True):
+  file_data = get_vcf_file(csv_file, separator_csv=separator_csv, debug_enabled=debug_enabled)
+  if want_write_file: write_file(output_vcf,file_data)
