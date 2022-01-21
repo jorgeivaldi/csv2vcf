@@ -10,7 +10,7 @@ def main():
     header = []
     fields_header = []
 
-    sg.theme("Dark Gray 2")
+    sg.theme("Material2")
     layout_fields = [
       [
         sg.Checkbox("nombre (requerido)",key="check_nombre",disabled=True,pad=((20,10),(8,1)),default=False),
@@ -49,7 +49,7 @@ def main():
             sg.Submit("Convertir",pad=(6,1), disabled=True),
         ]
     ]
-    window = sg.Window('csv2vcf', layout, icon="icon.ico", finalize=True,size=(370,320))
+    window = sg.Window('csv2vcf - by jorge', layout, icon="icon.ico", finalize=True,size=(370,320))
 
     while True:
         event, values = window.read()
