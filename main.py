@@ -1,13 +1,27 @@
 import os
-from lib import csv2vcf
+import argparse
+from collections import Counter
+from lib import def_and_get_args,get_column_index, detect_repeated_column, get_data_from_csv, csv2vcf, get_vcf_file
 
 def main():
-  src="CONTACTOS.csv"
-  dst="output/contactos.vcf"
-  src = os.path.join(os. path. dirname(__file__), src)
-  dst = os.path.join(os. path. dirname(__file__), dst)
+  # get all args
+  args = def_and_get_args()
 
-  csv2vcf(src, dst, debug_enabled=True, want_write_file=True)
+  # data variable set
+  file_csv = args.csv
+  output = args.output
+  output_vcf = args.vcf
+  operation = args.op
+  # get csv data
+  data = get_data_from_csv(file_csv)
+
+  # detect and execute operation
+  if operation == "repeated":
+    col  = get_column_index(args.column,data)
+    detect_repeated_column(file_csv,data,col,output)
+
+  if operation == "convert":
+    csv2vcf(file_csv,output_vcf)
 
 if __name__ == "__main__":
-  main()
+    main()
